@@ -1,6 +1,8 @@
 package com.pismo.txnroutine.model;
 
 import java.time.LocalDateTime;
+
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -17,9 +19,11 @@ public class Transaction {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long transactionId;
 
-    private Account account;
+    @Column(name = "account_id", nullable = false)
+    private Long accountId;
 
-    private OperationType operationType;
+    @Column(name = "operation_type_id", nullable = false)
+    private Long OperationTypeId;
 
     private Double amount;
 
