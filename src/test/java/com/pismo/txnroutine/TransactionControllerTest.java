@@ -9,7 +9,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 
-
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +21,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pismo.txnroutine.controller.TransactionController;
 import com.pismo.txnroutine.dto.request.TransactionRequest;
 import com.pismo.txnroutine.entity.Transaction;
+import com.pismo.txnroutine.exceptions.ApiErrors;
+import com.pismo.txnroutine.exceptions.ApplicationException;
 import com.pismo.txnroutine.service.TransactionService;
 
 @WebMvcTest(TransactionController.class)
@@ -32,8 +34,27 @@ public class TransactionControllerTest {
     @MockBean
     private TransactionService transactionService;
 
+        @Test
+        @DisplayName("account not found while creating transaction")
+        void createTransaction_AccountNotFound() throws Exception {
+            TransactionRequest txnRequest = TransactionRequest.builder()
+                    .accountId(1L)
+                    .operationTypeId(1L)
+                    .amount(100.0)
+                    .build();
+
+            when(transactionService.createTransaction(any())).thenThrow(new ApplicationException(ApiErrors.ACCOUNT_NOT_FOUND, 1L));
+
+            mockMvc.perform(post("/api/v1/transactions")
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content(new ObjectMapper().writeValueAsString(txnRequest)))
+                    .andExpect(status().isNotFound())
+                    .andExpect(jsonPath("$.errorCode").value("ACC-002"));
+        }
+
     @Test
-    void createTransactionTest() throws Exception {
+    @DisplayName("create transaction")
+    void createTransaction() throws Exception {
     
         TransactionRequest txnRequest = TransactionRequest.builder()
                                                         .accountId(1L)

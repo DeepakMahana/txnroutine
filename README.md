@@ -43,6 +43,12 @@ cd txnroutine
 
 ### Setup the Project
 
+### Build and Run using Docker
+
+```sh
+./build_run.sh
+```
+
 # Using Maven
 
 - Build the application
@@ -84,3 +90,8 @@ Enter the below details
 - jdbc driver - jdbc:h2:mem:pismo
 - username - pismo
 - password - pismo
+
+## License
+
+This project is licensed under the [MIT License](LICENSE).
+

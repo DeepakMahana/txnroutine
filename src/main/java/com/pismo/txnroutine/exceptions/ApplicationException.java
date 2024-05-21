@@ -17,6 +17,6 @@ public class ApplicationException extends RuntimeException {
         this.errorCode = apiError.getCode();
         this.message = apiError.getMessage();
         this.args = args;
-        this.httpStatus = HttpStatus.CONFLICT;
+        this.httpStatus = HttpStatus.valueOf(apiError.getHttpStatus());
     }
 }

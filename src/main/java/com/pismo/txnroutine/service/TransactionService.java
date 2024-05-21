@@ -7,12 +7,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.pismo.txnroutine.dto.request.TransactionRequest;
-import com.pismo.txnroutine.entity.Account;
-import com.pismo.txnroutine.entity.OperationType;
 import com.pismo.txnroutine.entity.Transaction;
 import com.pismo.txnroutine.exceptions.ApiErrors;
 import com.pismo.txnroutine.exceptions.ApplicationException;
-import com.pismo.txnroutine.repository.OperationTypeRepository;
 import com.pismo.txnroutine.repository.TransactionRepository;
 import com.pismo.txnroutine.util.MapperUtility;
 

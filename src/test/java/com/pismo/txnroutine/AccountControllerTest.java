@@ -51,8 +51,8 @@ public class AccountControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(new ObjectMapper().writeValueAsString(accountRequest)))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.id").value(1L))
-                .andExpect(jsonPath("$.documentNumber").value("123456"));
+                .andExpect(jsonPath("$.account_id").value(1L))
+                .andExpect(jsonPath("$.document_number").value("123456"));
 
         verify(accountService, times(1)).createAccount(captor.capture());
         AccountRequest capturedRequest = captor.getValue();
@@ -71,8 +71,8 @@ public class AccountControllerTest {
         mockMvc.perform(get("/api/v1/accounts/{accountId}", accountId))
                 // Then
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.id").value(accountId))
-                .andExpect(jsonPath("$.documentNumber").value("123456789"));
+                .andExpect(jsonPath("$.account_id").value(accountId))
+                .andExpect(jsonPath("$.document_number").value("123456789"));
 
         // Verify that the getAccount method of AccountService is called with the specified accountId
         verify(accountService).getAccount(eq(accountId));
