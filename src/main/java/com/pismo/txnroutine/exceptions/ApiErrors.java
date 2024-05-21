@@ -1,8 +1,10 @@
 package com.pismo.txnroutine.exceptions;
 
 public enum ApiErrors {
-    DOCUMENT_NO_ALREADY_EXIST("ACC-001", "Document No already exists : %s"),
-    ACCOUNT_NOT_FOUND("ACC-002", "Account not found : %s");
+    
+    DOCUMENT_NO_ALREADY_EXIST("ACC-001", "Document No already exists"),
+    ACCOUNT_NOT_FOUND("ACC-002", "Account not found"),
+    OPERATIONTYPE_NOT_FOUND("ACC-003", "Operation Type not found");
     
     private final String code;
     private final String message;

@@ -27,6 +27,7 @@ public class Transaction {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false)
     private Long id;
 
     @Column(name = "account_id", nullable = false)
@@ -35,7 +36,9 @@ public class Transaction {
     @Column(name = "operationtype_id", nullable = false)
     private Long operationTypeId;
 
+    @Column(name = "amount")
     private Double amount;
 
+    @Column(name = "eventdate")
     private LocalDateTime eventDate;
 }
