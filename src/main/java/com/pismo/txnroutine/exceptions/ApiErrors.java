@@ -4,7 +4,8 @@ public enum ApiErrors {
     
     DOCUMENT_NO_ALREADY_EXIST("ACC-001", "Document No already exists", 409),
     ACCOUNT_NOT_FOUND("ACC-002", "Account not found", 404),
-    OPERATIONTYPE_NOT_FOUND("ACC-003", "Operation Type not found", 404);
+    OPERATIONTYPE_NOT_FOUND("ACC-003", "Operation Type not found", 404),
+    INVALID_PAGE("ACC-004", "Invalid page number selected", 400);
     
     private final String code;
     private final String message;
