@@ -39,6 +39,9 @@ public class Transaction {
     @Column(name = "amount")
     private Double amount;
 
+    @Column(name = "balance")
+    private Double balance;
+
     @Column(name = "eventdate")
     private LocalDateTime eventDate;
 }

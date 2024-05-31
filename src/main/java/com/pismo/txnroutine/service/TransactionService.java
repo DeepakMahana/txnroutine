@@ -19,6 +19,7 @@ import com.pismo.txnroutine.repository.TransactionRepository;
 import com.pismo.txnroutine.util.MapperUtility;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Objects;
 
 @Service
@@ -48,10 +49,29 @@ public class TransactionService {
             throw new ApplicationException(ApiErrors.OPERATIONTYPE_NOT_FOUND, txnRequest.getOperationTypeId());
         }
 
+        double finalBalance = 0.0;
+        if(txnRequest.getOperationTypeId() == 4){
+            double pendingTotalAmount = txnRequest.getAmount();
+            List<Transaction> txns = transactionRepository.findByOperationIdForDebitTransactions();
+            for(Transaction txn : txns){
+                if(pendingTotalAmount > 0){
+                    pendingTotalAmount = pendingTotalAmount + txn.getAmount();
+                    if(pendingTotalAmount > 0){
+                        transactionRepository.updateTransactionByIdWithZeroBalance(txn.getId());
+                    }else{
+                        transactionRepository.updateTransactionByIdWithPendingBalance(pendingTotalAmount, txn.getId());
+                        break;
+                    }
+                }
+            }
+            finalBalance = pendingTotalAmount < 0 ? finalBalance : pendingTotalAmount;
+        }
+
         Transaction transaction = Transaction.builder()
                                              .accountId(txnRequest.getAccountId())
                                              .operationTypeId(txnRequest.getOperationTypeId())
                                              .amount(txnRequest.getAmount())
+                                            //  .balance(finalBalance)
                                              .eventDate(LocalDateTime.now())
                                              .build();
         Transaction savedTransaction = transactionRepository.save(Objects.requireNonNull(MapperUtility.convertClass(transaction, Transaction.class)));
